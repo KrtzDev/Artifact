@@ -10,14 +10,14 @@ public class GrappleToHook : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (hookedOn == true)
+        if (hookedOn)
         {
             grapplingHookSpringJoint.spring = springJointspringines;
         }
         else
         {
             grapplingHookSpringJoint.spring = 0f;
-            character.velocity = new Vector3(0,character.velocity.y,0);
-        }
+            character.velocity = new Vector3(0,character.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, 0);
+        }   
     }
 }
