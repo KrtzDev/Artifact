@@ -20,7 +20,7 @@ public class ThrowGrapplingHook : MonoBehaviour
     private GrappleToHook grappleToHook;
     private AimToggle aimToggle;
 
-    private float throwing;
+    private bool throwingInput;
 
     void Start()
     {
@@ -32,13 +32,20 @@ public class ThrowGrapplingHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        throwing = Input.GetAxis("Throw");
+        if (Input.GetAxis("Throw") > 0.1f || Input.GetButton("Fire1"))
+        {
+            throwingInput = true;
+        }
+        else
+        {
+            throwingInput = false;
+        }
 
-        if (throwing > 0.1f && aimToggle.aiming == true && grappleToHook.hookedOn == false)
+        if (throwingInput && aimToggle.aiming == true && grappleToHook.hookedOn == false)
         {
             ThrowGrappleHookRaycast();
         }
-        else if (throwing <= 0)
+        else if (!throwingInput)
         {
             grappleToHook.hookedOn = false;
             weaponGrapplingHook.SetParent(weaponPoint);
