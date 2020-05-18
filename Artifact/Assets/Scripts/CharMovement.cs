@@ -6,7 +6,7 @@ public class CharMovement : MonoBehaviour
 
     [SerializeField] private float airBornMoveSpeed = 3f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float rotateSpeed = 3f;
+    [SerializeField] private float rotateSpeed = 4f;
     [SerializeField] private LayerMask layerMask;
 
     private Rigidbody character;
@@ -78,13 +78,13 @@ public class CharMovement : MonoBehaviour
             {
                 //Turn left
                 Quaternion deltaRotation = Quaternion.Euler(turnVector);
-                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.35f));
+                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.25f));
             }
             if (aimToggle.leftRight < -14f)
             {
                 //Turn right
                 Quaternion deltaRotation = Quaternion.Euler(turnVector);
-                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.35f));
+                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.25f));
             }
         }           
     }

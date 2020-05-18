@@ -12,7 +12,7 @@ public class AimToggle : MonoBehaviour
     [SerializeField] private Transform AimingIndicator;
     [SerializeField] private Transform aimingTargetRotation;
     
-    private float upDown;
+    public float upDown;
     
     private float minClampLeftRight = -15f;
     private float maxClampLeftRight = 15f;
@@ -35,8 +35,8 @@ public class AimToggle : MonoBehaviour
     {
         //Inputs
         upDown = Mathf.Clamp(upDown - Input.GetAxis("Mouse Y"), minClampUpDown, maxClampUpDown);
-        leftRight = Mathf.Clamp(leftRight - Input.GetAxis("Mouse X"), minClampLeftRight, maxClampLeftRight);
-     
+        leftRight = Mathf.Clamp(leftRight - Input.GetAxis("Mouse X"), minClampLeftRight, maxClampLeftRight);   
+        
         if (Input.GetButton("Aim"))
         {
             AimCamActive();
@@ -48,7 +48,7 @@ public class AimToggle : MonoBehaviour
         {
             PlayerCamActive();
             ResetAimingPoint();
-            RevertAimActions();        
+            RevertAimActions();
         }
     }
 
@@ -62,14 +62,14 @@ public class AimToggle : MonoBehaviour
     void RevertAimActions()
     {
         AimingIndicator.gameObject.SetActive(false);
+        StopCoroutine(WaitForCamswitch());
         StartCoroutine(WaitForCamswitch());
-        charMovement.moveSpeed = 10f;
+        charMovement.moveSpeed = 7f;
     }
 
     void MoveAimingTarget()
     {
         aimingTargetRotation.localEulerAngles = new Vector3(upDown, -leftRight, 0);
-        AimingIndicator.gameObject.SetActive(true);
     }
 
     void ResetAimingPoint()
@@ -77,7 +77,7 @@ public class AimToggle : MonoBehaviour
         aimingTargetRotation.localRotation = Quaternion.identity;
         upDown = 0f;
         leftRight = 0f;
-        aimingTargetRotation.localEulerAngles = new Vector3(upDown, -leftRight, 0);
+        aimingTargetRotation.localEulerAngles = new Vector3(0 ,0 , 0);
     }
 
     void AimCamActive()
