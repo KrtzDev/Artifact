@@ -5,15 +5,16 @@ public class AimToggle : MonoBehaviour
 {
     public bool aiming;
     public float leftRight;
+    public float upDown;
     
     [SerializeField] private Cinemachine.CinemachineFreeLook playerCam;
     [SerializeField] private Cinemachine.CinemachineFreeLook aimCam;
     
     [SerializeField] private Transform AimingIndicator;
     [SerializeField] private Transform aimingTargetRotation;
-    
-    public float upDown;
-    
+
+    private float CrosshairSpeed = 50f;
+
     private float minClampLeftRight = -15f;
     private float maxClampLeftRight = 15f;
     private float minClampUpDown = -50f;
@@ -34,8 +35,8 @@ public class AimToggle : MonoBehaviour
     void Update()
     {
         //Inputs
-        upDown = Mathf.Clamp(upDown - Input.GetAxis("Mouse Y"), minClampUpDown, maxClampUpDown);
-        leftRight = Mathf.Clamp(leftRight - Input.GetAxis("Mouse X"), minClampLeftRight, maxClampLeftRight);   
+        upDown = Mathf.Clamp(upDown - (Input.GetAxis("Mouse Y") * Time.deltaTime * CrosshairSpeed), minClampUpDown, maxClampUpDown);
+        leftRight = Mathf.Clamp(leftRight - (Input.GetAxis("Mouse X") * Time.deltaTime * CrosshairSpeed), minClampLeftRight, maxClampLeftRight);   
         
         if (Input.GetButton("Aim"))
         {
@@ -77,7 +78,7 @@ public class AimToggle : MonoBehaviour
         aimingTargetRotation.localRotation = Quaternion.identity;
         upDown = 0f;
         leftRight = 0f;
-        aimingTargetRotation.localEulerAngles = new Vector3(0 ,0 , 0);
+        aimingTargetRotation.localEulerAngles = new Vector3(upDown ,-leftRight , 0);
     }
 
     void AimCamActive()

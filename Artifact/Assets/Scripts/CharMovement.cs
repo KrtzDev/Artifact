@@ -78,13 +78,13 @@ public class CharMovement : MonoBehaviour
             {
                 //Turn left
                 Quaternion deltaRotation = Quaternion.Euler(turnVector);
-                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.25f));
+                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.15f));
             }
             if (aimToggle.leftRight < -14f)
             {
                 //Turn right
                 Quaternion deltaRotation = Quaternion.Euler(turnVector);
-                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.25f));
+                character.MoveRotation(Quaternion.Slerp(character.rotation, character.rotation * deltaRotation, 0.15f));
             }
         }           
     }
